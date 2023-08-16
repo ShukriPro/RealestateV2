@@ -1,0 +1,80 @@
+extend layout 
+block content 
+    .container-fluid.mt-4
+     .row
+      .col-md-2
+       .row-border.columnOne
+        .col
+        each suburb in suburbs
+         ul.nav.md-5.border
+            li.text-primary
+                i.fa.fa-road
+                a(href="/" + suburb.suburb)= suburb.suburb 
+      .col-md
+       .content
+        .relContent
+            each property in properties
+             .card
+              img.card-img-top(src=`/images/houses/${property.image_name}` alt='300 x 230')
+              .card-body
+                h5.card-title(style='white-space: nowrap; overflow: hidden; text-overflow: ellipsis;')
+                  i.text-primary.fa.fa-map-marker(aria-hidden='true')
+                  a(href=`/${property.suburb}`)= property.suburb
+                p.card-text(style='white-space: nowrap; overflow: hidden; text-overflow: ellipsis;')
+                  i.text-primary.fa.fa-road(aria-hidden='true')
+                  a(href=`/${property.address}`)= property.address
+                button.btn.btn-primary(type='button', data-bs-toggle='modal', data-bs-target='#housemodal', data-id=property.id, data-description=property.description, data-image=property.image_name) More info...
+
+        #housemodal.modal.fade(tabindex='-1', role='dialog' aria-labelledby='housemodalTitle' aria-hidden='true')
+          .modal-dialog.modal-dialog-centered(role='document')
+            .modal-content
+              .modal-header
+                img.image_modal(src="" width="100%")
+              .modal-body
+              .modal-footer
+                button.btn.btn-secondary(type='button', data-bs-dismiss='modal') Close
+
+
+
+           
+        nav(aria-label='Page navigation example')
+          ul.pagination
+            li.page-item(class=currentPage === 1 ? 'disabled' : '')
+              a.page-link(href=`/${suburb}?page=${currentPage - 1}`) Previous
+            - for (let i = 1; i <= totalPages; i++)
+              - if (i === currentPage)
+                li.page-item.active 
+                  a.page-link(href='#') #{i} 
+              - else
+                li.page-item
+                  a.page-link(href=`/${suburb}?page=${i}`) #{i}
+            li.page-item(class=currentPage === totalPages ? 'disabled' : '')
+              a.page-link(href=`/${suburb}?page=${currentPage + 1}`) Next
+
+        ///nav(aria-label='Page navigation example')
+        ///a.page-link(href=`/${suburb}?page=${currentPage + 1}`) Next
+        ///a.page-link(href=`/${suburb}?page=${i}`) #{i}
+        ///li.page-item(class=currentPage === 1 ? 'disable' : '')
+        ///- for (let i = 1; i <= totalPages; i++)
+        ///- if (i === currentPage)
+        ///li.page-item.active 
+        ///a.page-link(href='#') #{i} 
+        ///ul.pagination
+        ///- else
+        ///li.page-item
+        ///li.page-item(class=currentPage === totalPages ? 'disable' : '')
+        ///a.page-link(href=`/${suburb}?page=${currentPage -1}`) Previous
+
+
+        //nav.mt-4(aria-label='Page nav')
+        // ul.pagination
+        //  li.page-item
+        //   a.page-link(href='#') Previous
+        //  li.page-item
+        //   a.page-link(href='#') 1
+        //  li.page-item
+        //   a.page-link(href='#') 2
+        //  li.page-item
+        //   a.page-link(href='#') 3
+        //  li.page-item
+        //   a.page-link(href='#') Next
